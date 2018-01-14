@@ -47,18 +47,26 @@ var light = new THREE.AmbientLight(0x000000);
 //create the shape
 var geometry = new THREE.BoxGeometry(1,1,1);
 
-//create material
-var material = new THREE.MeshBasicMaterial({
-	color: 0x00f0ff,
-	vertexColors: THREE.FaceColors
-	// wireframe: true //only frames
-}); 
+// One texture for all sides
+// var cubeMaterial = new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('img/1.jpg'),side: THREE.DoubleSide});
 
+
+
+var cubeMaterial = [
+	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('img/1.jpg'),side: THREE.DoubleSide}),// right side
+	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('img/1.jpg'),side: THREE.DoubleSide}),// left side
+	new THREE.MeshBasicMaterial({color: 0xff7777,side: THREE.DoubleSide}),// top side
+	new THREE.MeshBasicMaterial({color: 0x777777,side: THREE.DoubleSide}),// bottoms ide
+	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('img/1.jpg'),side: THREE.DoubleSide}),// front side
+	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('img/1.jpg'),side: THREE.DoubleSide}) // back side
+];
+
+
+
+var material = new THREE.MeshFaceMaterial(cubeMaterial)	
 // create gyomentry coube
 var cube = new THREE.Mesh( geometry, material );
-	for(var i = 0; i<geometry.faces.length; i++){
-		geometry.faces[i].color.setRGB(Math.random(),Math.random(),Math.random())
-	}
+
 
 //adding cube to the scene
 scene.add( cube );
